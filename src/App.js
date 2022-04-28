@@ -1,6 +1,6 @@
 
 import './App.css';
-import ConnectWalletButton from './lib/connectWalletButton'
+import WhispApp from './lib/whispApp'
 
 function App() {
   return (
@@ -11,7 +11,10 @@ function App() {
       </header>
       <div>
       <p>Whisper Frontend</p>
-        <ConnectWalletButton/>
+      </div>
+      <br/>
+      <div >
+        <WhispApp/>
       </div>
     </div>
   );

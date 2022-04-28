@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import WalletConnect from './walletConnect';
+import NodeConnect from './nodeConnect';
 
-function ConnectWalletButton(){
+const ConnectWalletButton = (props) => {
     const appName = "Whispa";
 
+    const [buttonText, setbuttonText] = useState("Connect Wallet");
     const [showSelectWallet, setShowSelectWallet] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [walletConnected, setConnectedWallets] = useState([]);
+
+    const [walletSelected, setWalletSelected] = useState(undefined);
+
+    //const node = NodeConnect('ws://127.0.0.1:9945');
 
     const handleConnectWallet = async () => {
         let allconnected = await WalletConnect(appName);
@@ -22,18 +28,21 @@ function ConnectWalletButton(){
     }
 
     const handleChooseWallet = wallet => () => {
-        console.log(wallet);
+        let button_text = wallet.address.substring(0, 10) +"...\n   "+wallet.meta.name;
+        setWalletSelected(wallet);
+        props.setWallet(wallet);
+        props.handleConnected();
+        setbuttonText(button_text);
         setShowModal(false);
         setShowSelectWallet(false);
     }
 
     const handleCloseModal = () => setShowModal(false);
 
-
     return(
         <>
-            <Button variant="outline-primary" onClick={handleConnectWallet}>
-                Connect Wallet
+            <Button variant="outline-primary" onClick={handleConnectWallet} id="connect-wallet-button" wallet={walletSelected}>
+                {buttonText}
             </Button>
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
