@@ -39,6 +39,15 @@ const ConnectWalletButton = (props) => {
 
     const handleCloseModal = () => setShowModal(false);
 
+    const handleDisconnectWallet = () => {
+        setbuttonText("Connect Wallet");
+        props.handleDisConnect();
+        props.setWallet(undefined);
+        setWalletSelected(undefined);
+        setShowModal(false);
+        setShowSelectWallet(false);
+    }
+
     return(
         <>
             <Button variant="outline-primary" onClick={handleConnectWallet} id="connect-wallet-button" wallet={walletSelected}>
@@ -63,6 +72,15 @@ const ConnectWalletButton = (props) => {
                             </Button>
                             )
                         })
+                        }
+                        {
+                        walletConnected.length>0 &&(
+                        <Button variant="outline-info" size="lg" onClick={handleDisconnectWallet}>
+                                <p>
+                                Disconnect
+                                </p>
+                        </Button>
+                        )
                         }
                     </div>
                     </Modal.Body> 
