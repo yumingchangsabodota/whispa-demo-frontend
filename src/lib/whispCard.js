@@ -1,22 +1,26 @@
 
 import Card from 'react-bootstrap/Card';
 
-function WhispCards(){
-    const whisp_cards = [];
+function WhispCard(prop){
 
-    return(<>
-        <div id="whisp-cards">
-            <Card style={{ width: '18rem' }}>
+    const whisp = prop.whisp;
+
+    return(
+            <Card border="dark" style={{ width: '60rem' }}>
+                <Card.Header>Whisp</Card.Header>
                     <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
+                        <blockquote className="blockquote mb-0">
+                            <p>{whisp.content}</p>
+                            <footer className="blockquote-footer">
+                                <p>Hash: {whisp.hash}</p>
+                                <p>Whisper: {whisp.whisper}</p>
+                                <cite>{whisp.timestamp}</cite>
+                            </footer>
+                        </blockquote>
                     </Card.Body>
                 </Card>
-        </div>
-    </>)
+            )
 
 }
+
+export default WhispCard;

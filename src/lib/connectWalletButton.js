@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import WalletConnect from './walletConnect';
-import NodeConnect from './nodeConnect';
 
 const ConnectWalletButton = (props) => {
     const appName = "Whispa";
@@ -16,12 +15,15 @@ const ConnectWalletButton = (props) => {
 
     const [walletSelected, setWalletSelected] = useState(undefined);
 
+    const [injected, setInjected] = useState(undefined);
+
     //const node = NodeConnect('ws://127.0.0.1:9945');
 
     const handleConnectWallet = async () => {
         let allconnected = await WalletConnect(appName);
         let wallets = allconnected[1];
-        let injecteds = allconnected[0];
+        let injected = allconnected[0];
+        setInjected(injected);
         setConnectedWallets(wallets);
         setShowModal(true);
         setShowSelectWallet(true);
@@ -31,6 +33,7 @@ const ConnectWalletButton = (props) => {
         let button_text = wallet.address.substring(0, 10) +"...\n   "+wallet.meta.name;
         setWalletSelected(wallet);
         props.setWallet(wallet);
+        props.setInjected(injected);
         props.handleConnected();
         setbuttonText(button_text);
         setShowModal(false);
