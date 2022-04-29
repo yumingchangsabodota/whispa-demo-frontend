@@ -23,7 +23,7 @@ import NodeConnect from "./nodeConnect";
 function WhispApp (){
     const whisp_cards = [];
 
-    const node = NodeConnect("ws://127.0.0.1:9945");
+    const [node, setNode] = useState(NodeConnect("ws://127.0.0.1:9945"));
 
     const [firstRender, setFirstRender] = useState(false);
 
@@ -46,7 +46,6 @@ function WhispApp (){
     const handleWhisp = async (e) => {
         await whispOnce();
         clearWhispInput(e);
-        await getAllWhisps(node);
     }
 
     const whispOnce = async () => {
@@ -83,6 +82,7 @@ function WhispApp (){
         const entries = await api.query.palletWhisper.whisp.entries();
         const whisps_entries = entries.map(entry => parseWhisp(entry[1].unwrap()));
         setQueriedWhisps(whisps_entries);
+        console.log(whisps_entries);
     }
 
     const getWalletBalance = async (address, node) => {
@@ -117,6 +117,13 @@ function WhispApp (){
         
     }, [firstRender]);
 
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            getAllWhisps(node);
+        }, 20000);
+        return () => clearInterval(interval);
+      }, []);
 
     return(<>
         <div id="whisp-app">
