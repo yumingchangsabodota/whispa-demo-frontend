@@ -33,7 +33,6 @@ const ConnectWalletButton = (props) => {
         let button_text = wallet.address.substring(0, 10) +"...\n   "+wallet.meta.name;
         setWalletSelected(wallet);
         props.setWallet(wallet);
-        props.setInjected(injected);
         props.handleConnected();
         setbuttonText(button_text);
         setShowModal(false);

@@ -31,8 +31,6 @@ function WhispApp (){
 
     const [walletSelected, setWalletSelected] = useState(undefined);
 
-    const [injected, setInjected] = useState(undefined);
-
     const [whispValue, setwhispValue] = useState("");
 
     const [queriedWhisps, setQueriedWhisps] = useState([]);
@@ -45,7 +43,6 @@ function WhispApp (){
                                                                 content: content.toHuman()
                                                                 })
 
-
     const handleWhisp = async (e) => {
         await whispOnce();
         clearWhispInput(e);
@@ -54,10 +51,8 @@ function WhispApp (){
 
     const whispOnce = async () => {
         const api = await ApiPromise.create({ provider:node });
-        console.log(api);
-        console.log(injected);
         const injector = await web3FromAddress(walletSelected.address);
-        const result = await api.tx.palletWhisper.whisp(new Uint8Array(whispValue)).signAndSend(walletSelected.address, {signer: injector.signer});
+        const result = await api.tx.palletWhisper.whisp(whispValue).signAndSend(walletSelected.address, {signer: injector.signer});
         console.log(result)
     }
 
@@ -129,7 +124,7 @@ function WhispApp (){
                 <Container>
                     <Row className="justify-content-md-center">
                         <Col sm="3">
-                            <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect} setInjected={setInjected}/>
+                            <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect}/>
                         </Col>
                     </Row>
                 </Container>
