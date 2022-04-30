@@ -28,7 +28,7 @@ function WhispApp (){
 
     const [firstRender, setFirstRender] = useState(false);
 
-    const [whispTextEnable, setWhispTextEnable] = useState(true);
+    const [walletNotConnected, setwalletNotConnected] = useState(true);
 
     const [walletSelected, setWalletSelected] = useState(undefined);
 
@@ -63,11 +63,11 @@ function WhispApp (){
     }
 
     const handleConnected = () => {
-        setWhispTextEnable(false);
+        setwalletNotConnected(false);
     }
 
     const handleDisConnect = () => {
-        setWhispTextEnable(true);
+        setwalletNotConnected(true);
     }
 
     const getAllWhisps = async (node) => {
@@ -131,7 +131,7 @@ function WhispApp (){
                             <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect}/>
                         </Col>
                         <Col sm="3">
-                            <WalletBalance walletSelected={walletSelected}/>
+                            <WalletBalance walletSelected={walletSelected} disabled={walletNotConnected}/>
                         </Col>
                     </Row>
                 </Container>
@@ -141,12 +141,12 @@ function WhispApp (){
                         <Form.Group className="mb-3" controlId="whispa-here">
                             <Row className="justify-content-md-center">
                                 <Col sm="10">
-                                    <Form.Control type="text" as="textarea" placeholder="Whispa HERE!" disabled={whispTextEnable}/>
+                                    <Form.Control type="text" as="textarea" placeholder="Whispa HERE!" disabled={walletNotConnected}/>
                                 </Col>
                             </Row>
                         </Form.Group>
 
-                        <Button variant="secondary" onClick={e => handleWhisp(e)} disabled={whispTextEnable}>
+                        <Button variant="secondary" onClick={e => handleWhisp(e)} disabled={walletNotConnected}>
                             Whisp!
                         </Button>
 

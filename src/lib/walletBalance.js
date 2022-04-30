@@ -23,22 +23,11 @@ function WalletBalance(props){
     }
     
     return(
-        
-            <DropdownButton id="dropdown-basic-button" title="Wallet Balance" variant="secondary">
-                    {
-                    walletSelected!==undefined &&  (<>
-                            <Card.Header>Wallet Balance</Card.Header>
-                            <Card.Text>free: </Card.Text>
-                            <Card.Text>locked: </Card.Text>
-                            </>)
-                    }
-                                        {
-                    walletSelected===undefined &&  (<>
-                            <Card.Header>Not</Card.Header>
-                            <Card.Text>free: </Card.Text>
-                            <Card.Text>locked: </Card.Text>
-                            </>)
-                    }
+
+            <DropdownButton id="dropdown-basic-button" title="Wallet Balance" variant="secondary" disabled={props.disabled}>
+                    <Card.Header>Wallet Balance</Card.Header>
+                    <Card.Text>free: </Card.Text>
+                    <Card.Text>locked: </Card.Text>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <div className="d-grid gap-2" >
                         <FormControl placeholder="receiver"/>
