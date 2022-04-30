@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-
+import React, { useState } from "react";
+import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -62,29 +62,29 @@ const ConnectWalletButton = (props) => {
                 {
                 showSelectWallet && (
                     <Modal.Body>
-                    <div className="d-grid gap-2" id="selectCWallet">
-                        {
-                        walletConnected.map((wallet, index) => {
-                            return(
-                            <Button key={wallet.address} variant="outline-info" size="lg" onClick={handleChooseWallet(wallet)}>
-                                <p>
-                                {wallet.meta.name}<br/>
-                                {wallet.address}
-                                </p>
-                            </Button>
-                            )
-                        })
-                        }
-                        {
-                        walletConnected.length>0 &&(
-                        <Button variant="outline-info" size="lg" onClick={handleDisconnectWallet}>
-                                <p>
-                                Disconnect
-                                </p>
-                        </Button>
-                        )
-                        }
-                    </div>
+                        <Container>
+                            <div className="d-grid gap-2" id="selectCWallet">
+                                {
+                                walletConnected.map((wallet, index) => {
+                                    return(
+                                    <Button key={wallet.address} variant="outline-info" size="sm" onClick={handleChooseWallet(wallet)}>
+                                        <p>{wallet.meta.name}<br/></p>
+                                        <p>{wallet.address}</p>
+                                    </Button>
+                                    )
+                                })
+                                }
+                                {
+                                walletConnected.length>0 &&(
+                                <Button variant="outline-info" size="sm" onClick={handleDisconnectWallet}>
+                                        <p>
+                                        Disconnect
+                                        </p>
+                                </Button>
+                                )
+                                }
+                            </div>
+                        </Container>
                     </Modal.Body> 
                 )
                 }

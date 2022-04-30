@@ -14,13 +14,12 @@ function WhispCard(prop){
                             <footer className="blockquote-footer">
                                 <p>Hash: {whisp.hash}</p>
                                 <p>Whisper: {whisp.whisper}</p>
-                                <cite>{whisp.timestamp}</cite>
+                                <cite>{new Date(whisp.timestamp).toString()}</cite>
                             </footer>
                         </blockquote>
                     </Card.Body>
                 </Card>
             )
-
 }
 
 export default WhispCard;
