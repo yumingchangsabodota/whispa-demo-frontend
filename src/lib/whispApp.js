@@ -22,7 +22,8 @@ import NodeConnect from "./nodeConnect";
 import WalletBalance from "./walletBalance";
 
 function WhispApp (){
-    const whisp_cards = [];
+
+    const [denomination,setDenomination] = useState(12)
 
     const [node, setNode] = useState(NodeConnect("ws://127.0.0.1:9945"));
 
@@ -35,6 +36,12 @@ function WhispApp (){
     const [queriedWhisps, setQueriedWhisps] = useState([]);
 
     const [queriedWhispIds, setQueriedWhispIds] = useState([]);
+
+    const [freeBalance, setFreeBalance] = useState(0);
+
+    const [lockedBalance, setLockedBalance] = useState(0);
+
+    const [reservedBalance, setReservedBalance] = useState(0);
 
     const parseWhisp = ({whash,whisper,timestamp,content}) => ({hash:whash.toJSON(),
                                                                 whisper:whisper.toJSON(),
@@ -51,8 +58,8 @@ function WhispApp (){
     }
 
     const whispOnce = async (e) => {
+        let api = await ApiPromise.create({ provider:node });
         let whispValue = e.target.form.elements[0].value;
-        const api = await ApiPromise.create({ provider:node });
         const injector = await web3FromAddress(walletSelected.address);
         const result = await api.tx.palletWhisper.whisp(whispValue).signAndSend(walletSelected.address, {signer: injector.signer});
         console.log(result)
@@ -71,7 +78,7 @@ function WhispApp (){
     }
 
     const getAllWhisps = async (node) => {
-        const api = await ApiPromise.create({ provider:node });
+        let api = await ApiPromise.create({ provider:node });
         const entries = await api.query.palletWhisper.whisp.entries();
         const whisps_entries = entries.map(entry => parseWhisp(entry[1].unwrap()));
         //sort list desc
@@ -80,9 +87,17 @@ function WhispApp (){
         console.log(whisps_entries);
     }
 
-    const getWalletBalance = async (address, node) => {
-        console.log(node)
-        const api = await ApiPromise.create({ provider:node });
+    const getWalletBalance = async(address) => {
+        let api = await ApiPromise.create({ provider:node });
+        let account = await api.query.system.account(address);
+        setFreeBalance(account.data.free);
+        setLockedBalance(account.data.feeFrozen);
+        setReservedBalance(account.data.reserved);
+    }
+
+    /*
+    const getWalletBalance = async (address) => {
+        let api = await ApiPromise.create({ provider:node });
         let { data: { free: previousFree }, nonce: previousNonce } = await api.query.system.account(address);
 
         console.log(`${address} has a balance of ${previousFree}, nonce ${previousNonce}`);
@@ -101,7 +116,7 @@ function WhispApp (){
         console.log(ids[0]);
 
         return ids[0]
-    }
+    }*/
 
 
     useEffect(() => {
@@ -128,10 +143,11 @@ function WhispApp (){
                     <br/>
                     <Row className="justify-content-md-center">
                         <Col sm="3">
-                            <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect}/>
+                            <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect} getWalletBalance={getWalletBalance}/>
                         </Col>
                         <Col sm="3">
-                            <WalletBalance walletSelected={walletSelected} disabled={walletNotConnected}/>
+                            <WalletBalance walletSelected={walletSelected} node={node} freeBalance={freeBalance} denomination={denomination} getWalletBalance={getWalletBalance}
+                            lockedBalance={lockedBalance} reservedBalance={reservedBalance} disabled={walletNotConnected}/>
                         </Col>
                     </Row>
                 </Container>

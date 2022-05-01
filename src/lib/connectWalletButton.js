@@ -37,6 +37,8 @@ const ConnectWalletButton = (props) => {
         setbuttonText(button_text);
         setShowModal(false);
         setShowSelectWallet(false);
+        let addr = wallet.address;
+        props.getWalletBalance(addr);
     }
 
     const handleCloseModal = () => setShowModal(false);
