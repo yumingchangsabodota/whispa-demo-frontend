@@ -30,7 +30,8 @@ const ConnectWalletButton = (props) => {
     }
 
     const handleChooseWallet = wallet => () => {
-        let button_text = wallet.address.substring(0, 10) +"...\n   "+wallet.meta.name;
+        //let button_text = wallet.address.substring(0, 10) +"...\n   "+wallet.meta.name;
+        let button_text = wallet.meta.name;
         setWalletSelected(wallet);
         props.setWallet(wallet);
         props.handleConnected();

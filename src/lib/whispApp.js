@@ -6,7 +6,7 @@ import {
     web3UseRpcProvider
   } from '@polkadot/extension-dapp';
 
-import React, { useState, useEffect } from "react";
+import {React, useState, useEffect } from "react";
 
 import { ApiPromise } from '@polkadot/api'
 
@@ -20,6 +20,7 @@ import ConnectWalletButton from './connectWalletButton';
 import WhispCard from './whispCard';
 import NodeConnect from "./nodeConnect";
 import WalletBalance from "./walletBalance";
+import BlockListener from "./blockListener";
 
 function WhispApp (){
 
@@ -80,9 +81,10 @@ function WhispApp (){
     const getAllWhisps = async (node) => {
         let api = await ApiPromise.create({ provider:node });
         const entries = await api.query.palletWhisper.whisp.entries();
+        console.log(entries);
         const whisps_entries = entries.map(entry => parseWhisp(entry[1].unwrap()));
         //sort list desc
-        whisps_entries.sort((a,b)=> (a.timestamp < b.timestamp)?1:-1); 
+        whisps_entries.sort((a,b)=> (a.timestamp < b.timestamp)?1:-1);
         setQueriedWhisps(whisps_entries);
         console.log(whisps_entries);
     }
@@ -94,30 +96,6 @@ function WhispApp (){
         setLockedBalance(account.data.feeFrozen);
         setReservedBalance(account.data.reserved);
     }
-
-    /*
-    const getWalletBalance = async (address) => {
-        let api = await ApiPromise.create({ provider:node });
-        let { data: { free: previousFree }, nonce: previousNonce } = await api.query.system.account(address);
-
-        console.log(`${address} has a balance of ${previousFree}, nonce ${previousNonce}`);
-        console.log(`You may leave this example running and start example 06 or transfer any value to ${address}`);
-
-        const [{ nonce: accountNonce }, now, entries] = await Promise.all([
-            api.query.system.account(address),
-            api.query.timestamp.now(),
-            await api.query.palletWhisper.whisps.entries()
-          ]);
-        
-        console.log(`accountNonce(${address}) ${accountNonce}`);
-        console.log(`last block timestamp ${now.toNumber()}`);
-        console.log(entries);
-        const ids = entries.map(entry => entry[1].unwrap().toJSON());
-        console.log(ids[0]);
-
-        return ids[0]
-    }*/
-
 
     useEffect(() => {
         if (!firstRender) {
@@ -139,7 +117,10 @@ function WhispApp (){
         <div id="whisp-app">
             <Container fluid className="d-grid gap-5">
                 <Container>
-                    <Row className="justify-content-md-center">Whisp Frontend Demo</Row>
+                    <Row className="justify-content-md-center"> Whisp Frontend Demo</Row>
+                    <Row className="justify-content-md-center">
+                            <BlockListener node={node}/>
+                    </Row>
                     <br/>
                     <Row className="justify-content-md-center">
                         <Col sm="3">

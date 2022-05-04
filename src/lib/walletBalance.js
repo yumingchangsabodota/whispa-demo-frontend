@@ -3,9 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { ApiPromise } from '@polkadot/api'
+import {React, ApiPromise } from '@polkadot/api'
 
 import {
     web3FromAddress,
@@ -50,6 +50,7 @@ function WalletBalance(props){
         let injector = await web3FromAddress(walletSelected.address);
         let result =  await api.tx.balances.transfer(receiver,parseInt(valueToSend*(10**props.denomination))).signAndSend(props.walletSelected.address, {signer: injector.signer});
         console.log(result);
+        console.log(result.toJSON());
         e.target.form.elements[0].value = "";
         e.target.form.elements[1].value = "";
         await new Promise(res => setTimeout(res, 5000));
