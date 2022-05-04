@@ -59,9 +59,9 @@ function WalletBalance(props){
     return(
 
             <DropdownButton id="dropdown-basic-button" title="Wallet Balance" variant="secondary" disabled={props.disabled}>
-                    <Dropdown.Header>free: {props.freeBalance*(0.1**props.denomination)}</Dropdown.Header>
-                    <Dropdown.Header>locked: {props.lockedBalance*(0.1**props.denomination)}</Dropdown.Header>
-                    <Dropdown.Header>reserved: {props.reservedBalance*(0.1**props.denomination)}</Dropdown.Header>
+                    <Dropdown.Header>free: {props.freeBalance*(0.1**props.denomination)} WSC</Dropdown.Header>
+                    <Dropdown.Header>locked: {props.lockedBalance*(0.1**props.denomination)} WSC</Dropdown.Header>
+                    <Dropdown.Header>reserved: {props.reservedBalance*(0.1**props.denomination)} WSC</Dropdown.Header>
                     <Dropdown.Divider />
                     <Form>
                         <Form.Group className="mb-3 d-grid gap-2" controlId="formBasicEmail">

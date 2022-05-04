@@ -25,7 +25,7 @@ function WhispApp (){
 
     const [denomination,setDenomination] = useState(12)
 
-    const [node, setNode] = useState(NodeConnect("ws://127.0.0.1:9945"));
+    const [node, setNode] = useState(NodeConnect("ws://127.0.0.1:9946"));
 
     const [firstRender, setFirstRender] = useState(false);
 
@@ -143,11 +143,11 @@ function WhispApp (){
                     <br/>
                     <Row className="justify-content-md-center">
                         <Col sm="3">
-                            <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect} getWalletBalance={getWalletBalance}/>
-                        </Col>
-                        <Col sm="3">
                             <WalletBalance walletSelected={walletSelected} node={node} freeBalance={freeBalance} denomination={denomination} getWalletBalance={getWalletBalance}
                             lockedBalance={lockedBalance} reservedBalance={reservedBalance} disabled={walletNotConnected}/>
+                        </Col>
+                        <Col sm="3">
+                            <ConnectWalletButton setWallet={setWalletSelected} handleConnected={handleConnected} handleDisConnect={handleDisConnect} getWalletBalance={getWalletBalance}/>
                         </Col>
                     </Row>
                 </Container>
