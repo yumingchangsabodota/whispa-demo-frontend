@@ -15,5 +15,32 @@ This chain dose not necessary require hardfork when adding new fetures thanks to
 
 ## Here are some screenshots of the frontend demo
 
-Initiate state of the frontend, which queries all whisps and listen to blocks
+Initiate state of the frontend, which queries all whisps and listen to blocks.
 ![alt text](./docs/img/before_connecting_wallet.png)
+
+Click connect wallet button and a popup will show the injected wallets from polkadot.js extension.
+![alt text](./docs/img/choose_wallet.png)
+
+Once wallet is connected, the wallet balance will show.
+![alt text](./docs/img/wallet_connected.png)
+
+We can send a transaction through this custom ui. When click `Send!` polkadot.js will popup a sign window.
+Sign and submeit the transaction.
+![alt text](./docs/img/send_tx_on_custom_ui.png)
+
+We can see the balance difference after transaction is sent.
+![alt text](./docs/img/tx_sent.png)
+
+After connecting the wallet, we are able to whisp.
+Now let's whisp.
+Just like sending transaction, we will need to sign the whisp.
+![alt text](./docs/img/whisp_to_blockchain.png)
+
+Once whisp is sent, the new whisp will appear in ui.
+![alt text](./docs/img/whisp_sent.png)
+
+On the blockchain explorer we can see the whisp event.
+![alt text](./docs/img/whisp_event_on_explorer.png)
+
+There are some other functions that can be called from the `whisp-pallet`.
+![alt text](./docs/img/other_function_from_pallet.png)
