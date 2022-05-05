@@ -41,9 +41,6 @@ function WalletBalance(props){
         setReceiver(e.target.value);
     }
 
-    const clearInput = () => {
-
-    }
 
     const handleSendTx =  async(e) => {
         let api = await ApiPromise.create({ provider:props.node });
@@ -57,6 +54,9 @@ function WalletBalance(props){
         props.getWalletBalance(walletSelected.address);
     }
  
+    //use effect listen to balance change
+
+
     return(
 
             <DropdownButton id="dropdown-basic-button" title="Wallet Balance" variant="secondary" disabled={props.disabled}>
